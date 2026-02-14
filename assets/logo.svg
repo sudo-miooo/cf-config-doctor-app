@@ -1,0 +1,27 @@
+<svg width="240" height="80" viewBox="0 0 240 80" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="depthGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#4A00E0"/>
+      <stop offset="100%" stop-color="#8E2DE2"/>
+    </linearGradient>
+    <filter id="depth">
+      <feDropShadow dx="2" dy="2" stdDeviation="2" flood-opacity="0.3"/>
+    </filter>
+  </defs>
+  
+  <!-- 3D Blocks -->
+  <g filter="url(#depth)">
+    <rect x="20" y="25" width="12" height="30" rx="4" fill="url(#depthGrad)" opacity="0.8"/>
+    <rect x="35" y="20" width="12" height="35" rx="4" fill="url(#depthGrad)" opacity="0.9"/>
+    <rect x="50" y="15" width="12" height="40" rx="4" fill="url(#depthGrad)"/>
+  </g>
+  
+  <!-- CF Text with depth -->
+  <text x="80" y="45" font-family="'Poppins', sans-serif" font-size="32" font-weight="800" fill="url(#depthGrad)">CF</text>
+  
+  <!-- 3D Config Doctor -->
+  <g transform="translate(130, 25)">
+    <text font-family="'Poppins', sans-serif" font-size="14" font-weight="500" fill="#666" letter-spacing="1">CONFIG</text>
+    <text y="28" font-family="'Poppins', sans-serif" font-size="24" font-weight="800" fill="url(#depthGrad)">DOCTOR</text>
+  </g>
+</svg>
