@@ -116,10 +116,137 @@ class ScanService extends ChangeNotifier {
     if (foundIPs.isEmpty) return '# No IPs found yet.';
     final uuid = config.uuid.isNotEmpty ? config.uuid : '00000000-0000-0000-0000-000000000000';
     final path = config.wsPath.isNotEmpty ? config.wsPath : '/ws';
-    final proxies = foundIPs.mapIndexed((i, ip) => '  - name: CF-${ip.ip}\n    type: vless\n    server: ${ip.ip}\n    port: 443\n    uuid: $uuid\n    tls: true\n    skip-cert-verify: true\n    servername: ${config.domain}\n    network: ws\n    ws-opts:\n      path: $path\n      headers:\n        Host: ${config.domain}').join('\n');
-    final names = foundIPs.map((ip) => '    - CF-${ip.ip}').join('\n');
-    return 'mixed-port: 7890\nallow-lan: false\nmode: rule\nlog-level: info\nproxies:\n$proxies\n\nproxy-groups:\n  - name: Auto\n    type: url-test\n    url: http://www.gstatic.com/generate_204\n    interval: 300\n    proxies:\n$names\n\n  - name: Select\n    type: select\n    proxies:\n      - Auto\n$names\n\nrules:\n  - MATCH,Select\n';
-  }
+    final proxies = foundIPs.mapIndexed((i, ip) => '''
+  - name: CF-${ip.ip}
+    packet-encoding: ''
+    udp: false
+    tfo: false
+    client-fingerprint: chrome
+    type: vless
+    alpn:
+      - http/1.1
+    server: ${ip.ip}
+    port: 443
+    uuid: $uuid
+    tls: true
+    skip-cert-verify: false
+    servername: ${config.domain}
+    network: ws
+    ws-opts:
+      max-early-data: 2560
+      early-data-header-name: Sec-WebSocket-Protocol
+      path: $path
+      headers:
+        Host: ${config.domain}
+''').join('\n');
+    final names = foundIPs
+        .map((ip) => '      - CF-${ip.ip}')
+        .join('\n');
+
+    return '''
+mixed-port: 7890
+ipv6: true
+allow-lan: false
+unified-delay: false
+log-level: warning
+mode: rule
+disable-keep-alive: false
+keep-alive-idle: 10
+keep-alive-interval: 15
+tcp-concurrent: true
+geo-auto-update: true
+geo-update-interval: 168
+external-controller: 127.0.0.1:9090
+external-controller-cors:
+  allow-origins:
+    - '*'
+  allow-private-network: true
+external-ui: ui
+external-ui-url: 'https://github.com/MetaCubeX/metacubexd/archive/refs/heads/gh-pages.zip'
+profile:
+  store-selected: true
+  store-fake-ip: true
+dns:
+  enable: true
+  respect-rules: true
+  use-system-hosts: false
+  listen: 127.0.0.1:1053
+  ipv6: true
+  nameserver:
+    - 'https://8.8.8.8/dns-query#✅ Selector'
+  proxy-server-nameserver:
+    - '8.8.8.8#DIRECT'
+  direct-nameserver:
+    - '8.8.8.8#DIRECT'
+  direct-nameserver-follow-policy: true
+  nameserver-policy:
+    'rule-set:ir': '8.8.8.8#DIRECT'
+  enhanced-mode: redir-host
+tun:
+  enable: true
+  stack: mixed
+  auto-route: true
+  strict-route: true
+  auto-detect-interface: true
+  dns-hijack:
+    - any:53
+    - tcp://any:53
+  mtu: 9000
+sniffer:
+  enable: true
+  force-dns-mapping: true
+  parse-pure-ip: true
+  override-destination: true
+  sniff:
+    HTTP:
+      ports: [80, 8080, 8880, 2052, 2082, 2086, 2095]
+    TLS:
+      ports: [443, 8443, 2053, 2083, 2087, 2096]
+proxies:
+$proxies
+
+proxy-groups:
+  - name: Auto
+    type: url-test
+    url: http://www.gstatic.com/generate_204
+    interval: 300
+    proxies:
+$names
+
+  - name: Select
+    type: select
+    proxies:
+      - Auto
+$names
+rule-providers:
+  ir:
+    type: http
+    format: text
+    behavior: domain
+    path: './ruleset/ir.txt'
+    interval: 86400
+    url: 'https://raw.githubusercontent.com/Chocolate4U/Iran-clash-rules/release/ir.txt'
+  ir-cidr:
+    type: http
+    format: text
+    behavior: ipcidr
+    path: './ruleset/ir-cidr.txt'
+    interval: 86400
+    url: 'https://raw.githubusercontent.com/Chocolate4U/Iran-clash-rules/release/ircidr.txt'
+rules:
+  - GEOIP,lan,DIRECT,no-resolve
+  - NETWORK,udp,REJECT
+  - RULE-SET,ir,DIRECT
+  - RULE-SET,ir-cidr,DIRECT
+  - MATCH,Select
+ntp:
+  enable: true
+  server: time.cloudflare.com
+  port: 123
+  interval: 30
+
+''';}
+
 
   String buildPlainList() {
     if (foundIPs.isEmpty) return '# No IPs found yet.';
