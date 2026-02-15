@@ -35,13 +35,15 @@ Cf Config Doctor helps you scan IP ranges, detect low-latency clean IPs, and exp
 * 🎨 Theme & language switching
 
 ---
+
 ## screenshots
-<img width="400" height="200" alt="Screenshot_20260214_170504" src="https://github.com/user-attachments/assets/f6c3242d-6336-4544-919d-bbf5853fcf38" />
-<img width="400" height="200" alt="Screenshot_20260214_170443" src="https://github.com/user-attachments/assets/c22c5ed3-2056-47f6-a726-17c890798e1b" />
-<img width="400" height="200" alt="Screenshot_20260214_170419" src="https://github.com/user-attachments/assets/0ce87042-cd0f-4a3b-9faf-f70cc6fc7e39" />
-<img width="400" height="200" alt="Screenshot_20260214_170401" src="https://github.com/user-attachments/assets/29f2e91f-634f-4864-a2be-c20547c7f7a1" />
-<img width="400" height="200" alt="Screenshot_20260214_170313" src="https://github.com/user-attachments/assets/6797d531-e8c5-4f34-a1bb-ff7d498cb3f2" />
-<img width="400" height="200" alt="Screenshot_20260214_170255" src="https://github.com/user-attachments/assets/78789469-179a-4f78-9bb1-c65bf4341c1b" />
+<img width="400" height="200" alt="Screenshot_20260214_170313" src="https://github.com/user-attachments/assets/444cff16-bed6-41b9-909b-0276511c755e" />
+<img width="400" height="200" alt="Screenshot_20260214_170255" src="https://github.com/user-attachments/assets/0445ee75-19de-40cb-bad5-6947be3d8301" />
+<img width="400" height="200" alt="Screenshot_20260214_170504" src="https://github.com/user-attachments/assets/a7069b8a-e74a-44a8-be08-b0eaf550a4c9" />
+<img width="400" height="200" alt="Screenshot_20260214_170443" src="https://github.com/user-attachments/assets/3202815d-3ba7-45f2-8880-a6721af3d009" />
+<img width="400" height="200" alt="Screenshot_20260214_170419" src="https://github.com/user-attachments/assets/219f8853-dfd9-4819-ae7e-10589e7684b8" />
+<img width="400" height="200" alt="Screenshot_20260214_170401" src="https://github.com/user-attachments/assets/48df261f-c9bb-4341-b756-15d1840690f6" />
+
 
 
 ---
